@@ -1,6 +1,6 @@
 export type Theme = {
     fillPrimary: string;
-    TextPrimaryDark: string;
+    textPrimaryDark: string;
     textPrimaryLight: string;
     TextPrimaryExtraLight: string;
     TextContrastLight: string;
