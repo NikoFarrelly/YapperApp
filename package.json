@@ -2,26 +2,36 @@
   "name": "yapperapp",
   "version": "1.0.0",
   "main": "index.ts",
+  "type": "module",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "test:all": "yarn typescript && yarn lint && yarn format",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
     "format:check": "prettier --check 'src/**/*.{ts,tsx}'",
     "lint:check": "eslint 'src/**/*.{ts,tsx}'",
-    "lint": "eslint 'src/**/*.{ts,tsx}' --fix"
+    "lint": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "typescript": "tsc --noEmit"
   },
   "dependencies": {
     "eslint": "^9.31.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-native": "^5.0.0",
     "expo": "~53.0.20",
     "expo-status-bar": "~2.2.3",
+    "globals": "^16.3.0",
     "prettier": "^3.6.2",
     "react": "19.0.0",
-    "react-native": "0.79.5"
+    "react-native": "0.79.5",
+    "typescript-eslint": "^8.38.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.31.0",
     "@types/react": "~19.0.10",
     "typescript": "~5.8.3"
   },
