@@ -1,2 +1,1 @@
-export const Login = () => {
-}
+export const Login = () => {};
