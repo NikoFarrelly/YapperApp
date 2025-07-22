@@ -12,8 +12,7 @@ type TextVariants =
 	| 'secondary-extra-light'
 	| 'contrast-light'
 	| 'contrast-dark';
-
-type TextSizes = 'small' | 'regular' | 'large';
+type TextSizes = 'extra-small' | 'small' | 'regular' | 'large';
 
 type YapTextProps = {
 	text: string;
@@ -24,13 +23,15 @@ type YapTextProps = {
 
 const getTextSize = (size?: TextSizes): number => {
 	switch (size) {
+		case 'extra-small':
+			return 24;
 		case 'small':
-			return 14;
+			return 32;
 		default:
 		case 'regular':
-			return 18;
+			return 40;
 		case 'large':
-			return 22;
+			return 48;
 	}
 };
 
@@ -56,7 +57,7 @@ const getTextColour = (variant?: TextVariants): string => {
 	}
 };
 
-export const YapText = ({
+export const YapTitle = ({
 	text,
 	variant = 'primary-dark',
 	size = 'regular',

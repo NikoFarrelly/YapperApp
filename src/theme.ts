@@ -19,6 +19,11 @@ export const lightTheme: Theme = {
 	textPrimaryDark: addOpacity(colours.darkGreen, 0.9),
 	textPrimaryLight: addOpacity(colours.darkGreen, 0.75),
 	textPrimaryExtraLight: addOpacity(colours.darkGreen, 0.25),
+
+	textSecondaryDark: addOpacity(colours.lightGreen, 0.9),
+	textSecondaryLight: addOpacity(colours.lightGreen, 0.75),
+	textSecondaryExtraLight: addOpacity(colours.lightGreen, 0.25),
+
 	textContrastLight: addOpacity(colours.offWhite, 0.9),
 	textContrastDark: addOpacity(colours.offWhite, 0.75),
 	surfacePrimary: colours.lightGreen,
@@ -38,6 +43,11 @@ export const darkTheme: Theme = {
 	textPrimaryDark: addOpacity(colours.lightGreen, 0.9),
 	textPrimaryLight: addOpacity(colours.lightGreen, 0.75),
 	textPrimaryExtraLight: addOpacity(colours.lightGreen, 0.25),
+
+	textSecondaryDark: addOpacity(colours.darkGreen, 0.9),
+	textSecondaryLight: addOpacity(colours.darkGreen, 0.75),
+	textSecondaryExtraLight: addOpacity(colours.darkGreen, 0.25),
+
 	textContrastLight: addOpacity(colours.darkGreen, 0.9),
 	textContrastDark: addOpacity(colours.darkGreen, 0.75),
 	surfacePrimary: colours.darkGreen,
