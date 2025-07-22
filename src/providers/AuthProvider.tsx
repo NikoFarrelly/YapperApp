@@ -5,8 +5,6 @@ import { useRegister } from '../hooks/useRegister';
 import { AuthContext } from './AuthContext';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-	const [loginLoading, setLoginLoading] = useState(false);
-
 	const [jwtToken, setJwtToken] = useState<string>('');
 	const {
 		firstName,
@@ -30,9 +28,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		password: loginPassword,
 		setPassword: setLoginPassword,
 		isDisabled: isLoginDisabled,
+
+		response: loginResponse,
+		loading: loginLoading,
+		error: loginError,
+		request: loginRequest,
 	} = useLogin();
 
-	const onLogin = () => {};
+	const onLogin = async () => {
+		const res = await loginRequest({});
+		if (res?.status === 200) {
+			setJwtToken(res.data.access_token);
+		}
+	};
 
 	const onRegister = async () => {
 		const res = await registerRequest({});
@@ -42,11 +50,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	};
 
 	const context = {
-		loginLoading,
-		onLogin,
 		registerLoading,
 		onRegister,
-
 		firstName,
 		setFirstName,
 		lastName,
@@ -58,13 +63,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		setRegisterPassword,
 		registerResponse,
 		registerError,
-		registerRequest,
 
 		loginEmail,
 		setLoginEmail,
 		loginPassword,
 		setLoginPassword,
 		isLoginDisabled,
+		loginResponse,
+		loginLoading,
+		loginError,
+		onLogin,
 
 		jwtToken,
 		isLoggedIn: !!jwtToken,
