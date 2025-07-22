@@ -1,44 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Keyboard, KeyboardAvoidingView, ScrollView, View } from 'react-native';
+import React from 'react';
+import { KeyboardAvoidingView, View } from 'react-native';
 
+import { LoadingIndicator } from '../components/LoadingIndicator';
 import { Screen } from '../components/Screen';
 import { YapButton } from '../components/YapButton';
 import { YapInput } from '../components/YapInput';
 import { YapTitle } from '../components/YapTitle';
 import { IS_IOS } from '../constants';
-import { theme } from '../theme';
+import { useIsKeyboardVisible } from '../hooks/useIsKeyboardVisible';
+import { useLogin } from '../hooks/useLogin';
 
 export const Login = () => {
-	const [email, setEmail] = useState<string>('');
-	const [password, setPassword] = useState<string>('');
-	// const [errorMessage, setErrorMessage] = useState<string>('');
-	const [loading, setLoading] = useState<boolean>(false);
-
-	const onSubmit = () => {
-		setLoading(true);
-		// try {
-		// } catch (e) {
-		// } finally {
-		// 	setLoading(false);
-		// }
-	};
-	const isDisabled = email.includes('@') && email.length >= 10 && password.length >= 10;
-
-	const [isKeyboardVisible, setIsKeyboardVisible] = useState<boolean>(false);
-
-	useEffect(() => {
-		const keyboardShowingSubscription = Keyboard.addListener('keyboardDidShow', () =>
-			setIsKeyboardVisible(true),
-		);
-		const keyboardHideSubscription = Keyboard.addListener('keyboardDidHide', () =>
-			setIsKeyboardVisible(false),
-		);
-		return () => {
-			keyboardShowingSubscription.remove();
-			keyboardHideSubscription.remove();
-		};
-	});
-	console.log('isKeyboardVisible', isKeyboardVisible);
+	const { email, setEmail, password, setPassword, isDisabled, onSubmit, loading } = useLogin();
+	const isKeyboardVisible = useIsKeyboardVisible();
 
 	return (
 		<Screen variant={'contrast'}>
@@ -48,7 +22,7 @@ export const Login = () => {
 			<View style={{ flex: 0.25 }} />
 			{loading ? (
 				<View style={{ flex: 0.5, justifyContent: 'flex-start', alignItems: 'center' }}>
-					<ActivityIndicator size="large" color={theme.surfacePrimary} />
+					<LoadingIndicator />
 				</View>
 			) : (
 				<KeyboardAvoidingView

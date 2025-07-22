@@ -1,4 +1,8 @@
-const Register = () => {
-    return null;
-}
-export default Register;
+import React from 'react';
+
+import { Register } from '../src/screens/Register';
+
+const RegisterRoute = () => {
+	return <Register />;
+};
+export default RegisterRoute;
