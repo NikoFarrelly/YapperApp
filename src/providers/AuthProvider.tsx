@@ -36,7 +36,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 	const onRegister = async () => {
 		const res = await registerRequest({});
-		console.log('reg res', res);
+		if (res?.status === 201) {
+			setJwtToken(res.data.access_token);
+		}
 	};
 
 	const context = {

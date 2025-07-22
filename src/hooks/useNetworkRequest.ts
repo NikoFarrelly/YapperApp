@@ -10,7 +10,12 @@ let HEADERS: {
 	'Content-Type': 'application/json',
 };
 
-export const useNetworkRequest = <RequestData>(
+type Response<ResponseData> = {
+	data: ResponseData;
+	status: number;
+};
+
+export const useNetworkRequest = <ResponseData, RequestData>(
 	url: string,
 	method: HTTPRequestCodes,
 	data?: RequestData,
@@ -19,9 +24,9 @@ export const useNetworkRequest = <RequestData>(
 	const [error, setError] = useState(null);
 	const [response, setResponse] = useState(null);
 
-	const request = async <RequestFunctionData>(requestProps: {
-		requestData?: RequestFunctionData;
-	}) => {
+	const request = async (requestProps: {
+		requestData?: RequestData;
+	}): Promise<Response<ResponseData> | undefined> => {
 		setLoading(true);
 		const { requestData } = requestProps;
 		try {
@@ -44,7 +49,7 @@ export const useNetworkRequest = <RequestData>(
 			if (error) setError(null);
 			return { data: json, status: result.status };
 		} catch (e) {
-			console.log('Request failed with error', e);
+			console.warn('Request failed with error', e);
 			// @ts-expect-error // TODO setup error message properly
 			setError(e);
 		} finally {

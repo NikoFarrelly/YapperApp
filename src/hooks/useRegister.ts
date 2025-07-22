@@ -2,23 +2,38 @@ import { useMemo, useState } from 'react';
 
 import { useNetworkRequest } from './useNetworkRequest';
 
-const BASE_URL = 'http://localhost:4000';
-const REGISTER_URL = BASE_URL + '/auth/register';
+type RegisterResponse = {
+	access_token: string;
+	message: string;
+};
+const REGISTER_URL = process.env.EXPO_PUBLIC_API_URL + '/auth/register';
 
 export const useRegister = () => {
-	const [firstName, setFirstName] = useState('Joe');
-	const [lastName, setLastName] = useState('Bloggs');
-	const [email, setEmail] = useState('joe@bloggs.com');
-	const [password, setPassword] = useState('joebloggs#1&4eva');
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
-	const { loading, response, request, error } = useNetworkRequest(REGISTER_URL, 'POST', {
-		firstName,
-		lastName,
-		email,
-		password,
-	});
+	const { loading, response, request, error } = useNetworkRequest<RegisterResponse, {}>(
+		REGISTER_URL,
+		'POST',
+		{
+			firstName,
+			lastName,
+			email,
+			password,
+		},
+	);
 
-	const isDisabled = useMemo(() => !!firstName && !!lastName && !!email && !!password, [firstName]);
+	const isDisabled = useMemo(
+		() =>
+			firstName.length > 3 &&
+			lastName.length > 3 &&
+			email.includes('@') &&
+			email.length > 10 &&
+			password.length >= 10,
+		[firstName, lastName, email, password],
+	);
 
 	return {
 		firstName,
