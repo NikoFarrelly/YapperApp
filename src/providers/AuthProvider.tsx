@@ -1,11 +1,16 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 import { useLogin } from '../hooks/useLogin';
 import { useRegister } from '../hooks/useRegister';
+import { getStorageItem, setStorageItem } from '../utils/secureStorage';
 import { AuthContext } from './AuthContext';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [jwtToken, setJwtToken] = useState<string>('');
+	const handleSettingJwtToken = async (token: string) => {
+		setJwtToken(token);
+		await setStorageItem('AUTH', token);
+	};
 	const {
 		firstName,
 		setFirstName,
@@ -35,18 +40,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 		request: loginRequest,
 	} = useLogin();
 
+	useEffect(() => {
+		const getToken = async () => {
+			const token = await getStorageItem('AUTH');
+			if (token) await handleSettingJwtToken(token);
+		};
+		getToken();
+	}, []);
+
 	const onLogin = async () => {
 		const res = await loginRequest({});
-		if (res?.status === 200) {
-			setJwtToken(res.data.access_token);
-		}
+		if (res?.status === 200) await handleSettingJwtToken(res.data.access_token);
 	};
 
 	const onRegister = async () => {
 		const res = await registerRequest({});
-		if (res?.status === 201) {
-			setJwtToken(res.data.access_token);
-		}
+		if (res?.status === 201) await handleSettingJwtToken(res.data.access_token);
 	};
 
 	const context = {
