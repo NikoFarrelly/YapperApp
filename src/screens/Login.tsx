@@ -8,10 +8,20 @@ import { YapInput } from '../components/YapInput';
 import { YapTitle } from '../components/YapTitle';
 import { IS_IOS } from '../constants';
 import { useIsKeyboardVisible } from '../hooks/useIsKeyboardVisible';
-import { useLogin } from '../hooks/useLogin';
+import { useIsLoggedIn } from '../hooks/useIsLoggedIn';
+import { useAuth } from '../providers/AuthContext';
 
 export const Login = () => {
-	const { email, setEmail, password, setPassword, isDisabled, onSubmit, loading } = useLogin();
+	const {
+		loginEmail,
+		setLoginEmail,
+		loginPassword,
+		setLoginPassword,
+		isLoginDisabled,
+		loginLoading,
+		onLogin,
+	} = useAuth();
+	useIsLoggedIn();
 	const isKeyboardVisible = useIsKeyboardVisible();
 
 	return (
@@ -20,7 +30,7 @@ export const Login = () => {
 				<YapTitle text={'Login'} variant={'secondary-dark'} bold />
 			</View>
 			<View style={{ flex: 0.25 }} />
-			{loading ? (
+			{loginLoading ? (
 				<View style={{ flex: 0.5, justifyContent: 'flex-start', alignItems: 'center' }}>
 					<LoadingIndicator />
 				</View>
@@ -32,20 +42,20 @@ export const Login = () => {
 					<YapInput
 						title={'Email'}
 						placeholder={'user@place.com...'}
-						value={email}
-						onChangeText={setEmail}
+						value={loginEmail}
+						onChangeText={setLoginEmail}
 						inputMode={'email'}
 						keyboardType={'email-address'}
 					/>
 					<YapInput
 						title={'Password'}
 						placeholder={'********'}
-						value={password}
-						onChangeText={setPassword}
+						value={loginPassword}
+						onChangeText={setLoginPassword}
 						secureTextEntry
 					/>
 					<View style={{ paddingTop: 24 }}>
-						<YapButton text={'Submit'} onPress={onSubmit} disabled={!isDisabled} />
+						<YapButton text={'Submit'} onPress={onLogin} disabled={!isLoginDisabled} />
 					</View>
 				</KeyboardAvoidingView>
 			)}

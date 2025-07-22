@@ -9,5 +9,5 @@ export const useKeyboard = ({ onShow, onHide }: { onShow: () => void; onHide: ()
 			keyboardShowingSubscription.remove();
 			keyboardHideSubscription.remove();
 		};
-	});
+	}, []);
 };

@@ -6,10 +6,6 @@ export const useRegister = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const isDisabled = useMemo(() => !!firstName && !!lastName && !!email && !!password, [firstName]);
-	const [loading, setLoading] = useState(false);
-	const onSubmit = () => {
-		setLoading(true);
-	};
 
 	return {
 		firstName,
@@ -20,8 +16,6 @@ export const useRegister = () => {
 		setEmail,
 		password,
 		setPassword,
-		isDisabled,
-		onSubmit,
-		loading,
+		isDisabled
 	};
 };

@@ -8,31 +8,34 @@ import { YapInput } from '../components/YapInput';
 import { YapTitle } from '../components/YapTitle';
 import { IS_IOS } from '../constants';
 import { useIsKeyboardVisible } from '../hooks/useIsKeyboardVisible';
-import { useRegister } from '../hooks/useRegister';
+import { useIsLoggedIn } from '../hooks/useIsLoggedIn';
+import { useAuth } from '../providers/AuthContext';
 
 export const Register = () => {
 	const {
-		email,
-		setEmail,
-		password,
-		setPassword,
+		onRegister,
+		registerLoading,
+		registerEmail,
+		setRegisterEmail,
+		registerPassword,
+		setRegisterPassword,
 		firstName,
 		setFirstName,
 		lastName,
 		setLastName,
-		isDisabled,
-		onSubmit,
-		loading,
-	} = useRegister();
+		isRegisterDisabled,
+	} = useAuth();
+	useIsLoggedIn();
+
 	const isKeyboardVisible = useIsKeyboardVisible();
 
 	return (
 		<Screen variant={'contrast'}>
 			<View style={{ flex: 0.25, justifyContent: 'center' }}>
-				<YapTitle text={'Login'} variant={'secondary-dark'} bold />
+				<YapTitle text={'Register'} variant={'secondary-dark'} bold />
 			</View>
 			<View style={{ flex: 0.25 }} />
-			{loading ? (
+			{registerLoading ? (
 				<View style={{ flex: 0.5, justifyContent: 'flex-start', alignItems: 'center' }}>
 					<LoadingIndicator />
 				</View>
@@ -59,20 +62,20 @@ export const Register = () => {
 						<YapInput
 							title={'Email'}
 							placeholder={'user@place.com...'}
-							value={email}
-							onChangeText={setEmail}
+							value={registerEmail}
+							onChangeText={setRegisterEmail}
 							inputMode={'email'}
 							keyboardType={'email-address'}
 						/>
 						<YapInput
 							title={'Password'}
 							placeholder={'********'}
-							value={password}
-							onChangeText={setPassword}
+							value={registerPassword}
+							onChangeText={setRegisterPassword}
 							secureTextEntry
 						/>
 						<View style={{ paddingTop: 24 }}>
-							<YapButton text={'Submit'} onPress={onSubmit} disabled={!isDisabled} />
+							<YapButton text={'Submit'} onPress={onRegister} disabled={!isRegisterDisabled} />
 						</View>
 					</ScrollView>
 				</KeyboardAvoidingView>
